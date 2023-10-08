@@ -1,0 +1,50 @@
+name: Mogan Preflight
+
+on:
+  workflow_dispatch:
+    inputs:
+      mogan_version:
+        type: choice
+        description: "Mogan Version"
+        required: true
+        options:
+          - v1.1.6
+
+env:
+  XMAKE_ROOT: y
+
+jobs:
+  preflight:
+    container: archlinux:base-devel
+    runs-on: ubuntu-latest
+    steps:
+      - if: github.event.inputs.mogan_version == 'v1.1.6'
+        name: System
+        run: |
+          sudo pacman -Syyu --noconfirm --needed
+          sudo pacman -S --noconfirm --needed git cmake freetype2 libiconv
+          sudo pacman -S --noconfirm --needed qt6-base qt6-svg sqlite libpng zlib libjpeg curl texlive-core python libxext xmake unzip
+
+      - if: github.event.inputs.mogan_version == 'v1.1.6'
+        name: Inspect
+        run: |
+          uname -a
+          xmake --version
+          gcc --version
+
+      - if: github.event.inputs.mogan_version == 'v1.1.6'
+        name: Checkout
+        run: |
+          git clone https://github.com/XmacsLabs/mogan
+          cd mogan
+          git submodule update --init
+          git fetch --all --tags
+          git checkout v1.1.6
+
+      - if: github.event.inputs.mogan_version == 'v1.1.6'
+        name: Build
+        working-directory: mogan
+        run: |
+          xrepo update-repo
+          xmake config -m release --yes
+          xmake build --yes --verbose --diagnosis --jobs=8 --all
