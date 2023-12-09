@@ -8,7 +8,7 @@ on:
         description: "Mogan Version"
         required: true
         options:
-          - v1.1.6
+          - v1.2.0
 
 env:
   XMAKE_ROOT: y
@@ -18,33 +18,33 @@ jobs:
     container: archlinux:base-devel
     runs-on: ubuntu-latest
     steps:
-      - if: github.event.inputs.mogan_version == 'v1.1.6'
+      - if: github.event.inputs.mogan_version == 'v1.2.0'
         name: System
         run: |
           sudo pacman -Syyu --noconfirm --needed
-          sudo pacman -S --noconfirm --needed git cmake freetype2 libiconv
-          sudo pacman -S --noconfirm --needed qt6-base qt6-svg sqlite libpng zlib libjpeg curl texlive-core python libxext xmake unzip
+          sudo pacman -S --noconfirm --needed git xmake
+          sudo pacman -S --noconfirm --needed qt5-base qt5-svg sqlite zlib curl texlive-core python libxext unzip
 
-      - if: github.event.inputs.mogan_version == 'v1.1.6'
+      - if: github.event.inputs.mogan_version == 'v1.2.0'
         name: Inspect
         run: |
           uname -a
           xmake --version
           gcc --version
 
-      - if: github.event.inputs.mogan_version == 'v1.1.6'
+      - if: github.event.inputs.mogan_version == 'v1.2.0'
         name: Checkout
         run: |
           git clone https://github.com/XmacsLabs/mogan
           cd mogan
           git submodule update --init
           git fetch --all --tags
-          git checkout v1.1.6
+          git checkout v1.2.0
 
-      - if: github.event.inputs.mogan_version == 'v1.1.6'
+      - if: github.event.inputs.mogan_version == 'v1.2.0'
         name: Build
         working-directory: mogan
         run: |
-          xrepo update-repo
-          xmake config -m release --yes
-          xmake build --yes --verbose --diagnosis --jobs=8 --all
+          xmake repo --update --yes
+          xmake config -vD --policies=build.ccache -m releasedbg --yes
+          xmake build --yes -vD research
