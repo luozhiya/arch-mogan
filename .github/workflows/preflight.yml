@@ -23,7 +23,7 @@ jobs:
         run: |
           sudo pacman -Syyu --noconfirm --needed
           sudo pacman -S --noconfirm --needed git xmake
-          sudo pacman -S --noconfirm --needed qt5-base qt5-svg sqlite zlib curl texlive-core python libxext unzip
+          sudo pacman -S --noconfirm --needed qt5-base qt5-svg sqlite zlib curl texlive-core python libxext unzip libgit2
 
       - if: github.event.inputs.mogan_version == 'v1.2.3'
         name: Inspect
