@@ -39,7 +39,7 @@ jobs:
           cd mogan
           git submodule update --init
           git fetch --all --tags
-          git checkout v1.2.3
+          git checkout v1.2.5
 
       - if: github.event.inputs.mogan_version == 'v1.2.5'
         name: Build
