@@ -37,13 +37,13 @@ jobs:
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
         # Give all users (particularly builder) full access to these files
-        chmod -R a+rw /        
+        chmod -R a+rw .      
         
         git clone https://aur.archlinux.org/yay.git
         cd yay
+        chmod -R a+rw .
         sudo -H -u builder makepkg -si
 
     - name: Mogan
       run: |
-        sudo -H -u builder yay
-        sudo -H -u builder yay -S mogan
+        sudo -H -u builder yay --sync --noconfirm -S mogan
