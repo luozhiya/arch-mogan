@@ -1,5 +1,8 @@
 name: Mogan Yay
 
+on:
+  workflow_dispatch:
+  
 env:
   XMAKE_ROOT: y
 
