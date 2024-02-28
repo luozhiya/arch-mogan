@@ -8,7 +8,7 @@ on:
         description: "Mogan Version"
         required: true
         options:
-          - v1.2.3
+          - v1.2.5
 
 env:
   XMAKE_ROOT: y
@@ -18,21 +18,21 @@ jobs:
     container: archlinux:base-devel
     runs-on: ubuntu-latest
     steps:
-      - if: github.event.inputs.mogan_version == 'v1.2.3'
+      - if: github.event.inputs.mogan_version == 'v1.2.5'
         name: System
         run: |
           sudo pacman -Syyu --noconfirm --needed
           sudo pacman -S --noconfirm --needed git xmake
           sudo pacman -S --noconfirm --needed qt5-base qt5-svg sqlite zlib curl texlive-core python libxext unzip libgit2
 
-      - if: github.event.inputs.mogan_version == 'v1.2.3'
+      - if: github.event.inputs.mogan_version == 'v1.2.5'
         name: Inspect
         run: |
           uname -a
           xmake --version
           gcc --version
 
-      - if: github.event.inputs.mogan_version == 'v1.2.3'
+      - if: github.event.inputs.mogan_version == 'v1.2.5'
         name: Checkout
         run: |
           git clone https://github.com/XmacsLabs/mogan
@@ -41,7 +41,7 @@ jobs:
           git fetch --all --tags
           git checkout v1.2.3
 
-      - if: github.event.inputs.mogan_version == 'v1.2.3'
+      - if: github.event.inputs.mogan_version == 'v1.2.5'
         name: Build
         working-directory: mogan
         run: |
