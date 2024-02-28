@@ -47,4 +47,4 @@ jobs:
 
     - name: Mogan
       run: |
-        sudo -H -u builder yay --sync --noconfirm -S mogan
+        sudo -H -u builder yay --sync --noconfirm mogan
