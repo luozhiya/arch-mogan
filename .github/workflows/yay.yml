@@ -25,12 +25,25 @@ jobs:
 
     - name: Yay
       run: |
-        pacman -S --needed base-devel
+        # https://github.com/edlanglois/pkgbuild-action/blob/master/entrypoint.sh
+
+        # Makepkg does not allow running as root
+        # Create a new user `builder`
+        # `builder` needs to have a home directory because some PKGBUILDs will try to
+        # write to it (e.g. for cache)
+        useradd builder -m
+        # When installing dependencies, makepkg will use sudo
+        # Give user `builder` passwordless sudo access
+        echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        
+        # Give all users (particularly builder) full access to these files
+        chmod -R a+rw .
+        
         git clone https://aur.archlinux.org/yay.git
         cd yay
-        makepkg -si
+        sudo -H -u builder makepkg -si
 
     - name: Mogan
       run: |
-        yay
-        yay -S mogan
+        sudo -H -u builder yay
+        sudo -H -u builder yay -S mogan
