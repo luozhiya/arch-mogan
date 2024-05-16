@@ -50,3 +50,4 @@ jobs:
     - name: Mogan
       run: |
         sudo -H -u builder yay --sync --noconfirm mogan
+        MoganResearch --version
