@@ -50,4 +50,5 @@ jobs:
     - name: Mogan
       run: |
         sudo -H -u builder yay --sync --noconfirm mogan
-        MoganResearch --version
+        # https://github.com/XmacsLabs/mogan/blob/branch-1.2/src/System/Boot/init_texmacs.cpp#L619
+        MoganResearch -version
