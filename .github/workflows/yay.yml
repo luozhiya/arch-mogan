@@ -19,13 +19,13 @@ jobs:
             libjpeg curl python libxext xmake unzip noto-fonts-cjk \
             fontconfig libgit2 freetype2 openssl git mimalloc
 
-    - name: Inspect
+    - name: Inspect Build
       run: |
         uname -a
         xmake --version
         gcc --version
 
-    - name: Yay
+    - name: Setup Yay
       run: |
         # https://github.com/edlanglois/pkgbuild-action/blob/master/entrypoint.sh
 
@@ -47,9 +47,12 @@ jobs:
         sudo -H -u builder makepkg --syncdeps --install --noconfirm
         popd
 
-    - name: Mogan
+    - name: Yay Mogan
       run: |
         sudo -H -u builder yay --sync --noconfirm mogan
+        
+    - name: Inspect Mogan
+      run: |
         # https://github.com/XmacsLabs/mogan/blob/branch-1.2/src/System/Boot/init_texmacs.cpp#L619
         # https://github.com/XmacsLabs/mogan/blob/branch-1.2/src/Mogan/Research/research.cpp#L132
         MoganResearch -headless -version
